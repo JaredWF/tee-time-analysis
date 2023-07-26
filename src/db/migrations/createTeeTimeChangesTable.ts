@@ -5,8 +5,10 @@ export async function up(db: Kysely<any>): Promise<void> {
     .createTable('tee_time_changes')
     .addColumn('id', 'integer', (col) => col.notNull().autoIncrement().primaryKey())
     .addColumn('course', 'varchar(255)', (col) => col.notNull())
-    .addColumn('reservation_time', 'datetime', (col) => col.notNull())
-    .addColumn('update_time', 'datetime', (col) => col.notNull())
+    .addColumn('reservation_date', 'date', (col) => col.notNull())
+    .addColumn('reservation_time', 'time', (col) => col.notNull())
+    .addColumn('reservation_day_of_week', 'varchar(16)', (col) => col.notNull())
+    .addColumn('update_date_time', 'datetime', (col) => col.notNull())
     .addColumn('players_available', 'integer', (col) => col.notNull())
     .addColumn('price_dollars', 'numeric', (col) => col.notNull())
     .execute();
