@@ -10,7 +10,8 @@
     "start-db": "ts-node ./src/db/db.ts",
     "migrate-db": "ts-node ./src/db/migrate.ts",
     "generate-db-schema": "kysely-codegen --dialect sqlite",
-    "start-graphql": "ts-node ./src/graphql/index.ts"
+    "start-graphql": "ts-node ./src/graphql/index.ts",
+    "generate-gql-types": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
     "@apollo/server": "^4.8.1",
@@ -29,6 +30,11 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "5.0.0",
+    "@graphql-codegen/client-preset": "4.1.0",
+    "@graphql-codegen/typescript": "4.0.1",
+    "@graphql-codegen/typescript-document-nodes": "^4.0.1",
+    "@graphql-codegen/typescript-resolvers": "^4.0.1",
     "@types/better-sqlite3": "^7.6.4",
     "kysely-codegen": "^0.10.1",
     "ts-node": "^10.9.1"

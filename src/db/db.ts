@@ -2,14 +2,18 @@ import Database from 'better-sqlite3';
 import { Kysely, SqliteDialect } from 'kysely';
 import { DB } from 'kysely-codegen';
 
-const db = new Database('tee-times.db', { verbose: console.log });
+export function startDB() {
+  console.log('starting db');
 
-console.log('hello world!');
+  const db = new Database('tee-times.db', { verbose: console.log });
+  
+  const kyselyDb = new Kysely<DB>({
+    dialect: new SqliteDialect({
+      database: db
+    }),
+  });
 
-const kyselyDb = new Kysely<DB>({
-  dialect: new SqliteDialect({
-    database: db
-  }),
-});
+  console.log('DB started');
 
-while(true) {}
+  return kyselyDb;
+}
