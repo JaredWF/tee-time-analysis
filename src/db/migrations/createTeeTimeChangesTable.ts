@@ -1,4 +1,4 @@
-import { Kysely } from 'kysely';
+import { Kysely, sql } from 'kysely';
 
 export async function up(db: Kysely<any>): Promise<void> {
   await db.schema
@@ -8,7 +8,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('reservation_date', 'date', (col) => col.notNull())
     .addColumn('reservation_time', 'time', (col) => col.notNull())
     .addColumn('reservation_day_of_week', 'varchar(16)', (col) => col.notNull())
-    .addColumn('update_date_time', 'datetime', (col) => col.notNull())
+    .addColumn('update_date_time', 'timestamp', (col) => col.notNull().defaultTo(sql`CURRENT_TIMESTAMP`))
     .addColumn('players_available', 'integer', (col) => col.notNull())
     .addColumn('price_dollars', 'numeric', (col) => col.notNull())
     .execute();

@@ -11,14 +11,18 @@
     "migrate-db": "ts-node ./src/db/migrate.ts",
     "generate-db-schema": "kysely-codegen --dialect sqlite",
     "start-graphql": "ts-node ./src/graphql/index.ts",
-    "generate-gql-types": "graphql-codegen --config codegen.ts"
+    "generate-gql-types": "graphql-codegen --config codegen.ts",
+    "scrape": "ts-node ./src/scrapers/index.ts"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.0",
     "@apollo/server": "^4.8.1",
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
+    "axios": "1.4.0",
     "better-sqlite3": "^8.4.0",
+    "cross-fetch": "4.0.0",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.10",
     "graphql": "^16.7.1",

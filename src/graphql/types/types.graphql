@@ -1,4 +1,3 @@
-
 type Library {
   branch: String!
   books: [Book!]
@@ -23,12 +22,52 @@ type TeeTimeChangeResponse {
   courseName: String!
 }
 
+input TeeTimeChangesInput {
+  minReservationTime: String
+  maxReservationTime: String
+}
+
+type TeeTimeChange {
+  id: Int!
+  courseName: String!
+  priceDollars: Float!
+  reservationDate: String!
+  reservationDayOfWeek: DayOfWeek!
+  reservationTime: String!
+  playersAvailable: Int!
+  updateDateTime: String!
+}
+
+type TeeTimeChangesResponse {
+  teeTimeChanges: [TeeTimeChange]!
+}
+
 type Query {
   test: String!
   libraries: [Library]
+  teeTimeChanges(input: TeeTimeChangesInput!): TeeTimeChangesResponse!
+}
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+input AddTeeTimeInput {
+  courseName: String!
+  reservationDate: String!
+  reservationTime: String!
+  reservationDayOfWeek: DayOfWeek!
+  priceDollars: Float!
+  playersAvailable: Int!
 }
 
 type Mutation {
   testMutation(testInput: String): TestMutationResponse
-  addTeeTimeChange(courseName: String!): TeeTimeChangeResponse
+  addTeeTimeChange(input: AddTeeTimeInput!): TeeTimeChangeResponse
 }
