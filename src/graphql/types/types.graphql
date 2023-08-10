@@ -1,30 +1,14 @@
-type Library {
-  branch: String!
-  books: [Book!]
-}
-
-# A book has a title and author
-type Book {
-  title: String!
-  author: Author!
-}
-
-# An author has a name
-type Author {
-  name: String!
-}
-
 type TestMutationResponse {
   message: String!
-}
-
-type TeeTimeChangeResponse {
-  courseName: String!
 }
 
 input TeeTimeChangesInput {
   minReservationTime: String
   maxReservationTime: String
+  reservationDayOfWeek: DayOfWeek
+  minReservationDate: String
+  maxReservationDate: String
+  courseName: String
 }
 
 type TeeTimeChange {
@@ -44,7 +28,6 @@ type TeeTimeChangesResponse {
 
 type Query {
   test: String!
-  libraries: [Library]
   teeTimeChanges(input: TeeTimeChangesInput!): TeeTimeChangesResponse!
 }
 
@@ -69,5 +52,5 @@ input AddTeeTimeInput {
 
 type Mutation {
   testMutation(testInput: String): TestMutationResponse
-  addTeeTimeChange(input: AddTeeTimeInput!): TeeTimeChangeResponse
+  addTeeTimeChanges(teeTimes: [AddTeeTimeInput!]!): [TeeTimeChange]
 }

@@ -26,17 +26,6 @@ export type AddTeeTimeInput = {
   reservationTime: Scalars['String']['input'];
 };
 
-export type Author = {
-  __typename?: 'Author';
-  name: Scalars['String']['output'];
-};
-
-export type Book = {
-  __typename?: 'Book';
-  author: Author;
-  title: Scalars['String']['output'];
-};
-
 export enum DayOfWeek {
   Friday = 'FRIDAY',
   Monday = 'MONDAY',
@@ -47,21 +36,15 @@ export enum DayOfWeek {
   Wednesday = 'WEDNESDAY'
 }
 
-export type Library = {
-  __typename?: 'Library';
-  books?: Maybe<Array<Book>>;
-  branch: Scalars['String']['output'];
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
-  addTeeTimeChange?: Maybe<TeeTimeChangeResponse>;
+  addTeeTimeChanges?: Maybe<Array<Maybe<TeeTimeChange>>>;
   testMutation?: Maybe<TestMutationResponse>;
 };
 
 
-export type MutationAddTeeTimeChangeArgs = {
-  input: AddTeeTimeInput;
+export type MutationAddTeeTimeChangesArgs = {
+  teeTimes: Array<AddTeeTimeInput>;
 };
 
 
@@ -71,7 +54,6 @@ export type MutationTestMutationArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  libraries?: Maybe<Array<Maybe<Library>>>;
   teeTimeChanges: TeeTimeChangesResponse;
   test: Scalars['String']['output'];
 };
@@ -93,14 +75,13 @@ export type TeeTimeChange = {
   updateDateTime: Scalars['String']['output'];
 };
 
-export type TeeTimeChangeResponse = {
-  __typename?: 'TeeTimeChangeResponse';
-  courseName: Scalars['String']['output'];
-};
-
 export type TeeTimeChangesInput = {
+  courseName?: InputMaybe<Scalars['String']['input']>;
+  maxReservationDate?: InputMaybe<Scalars['String']['input']>;
   maxReservationTime?: InputMaybe<Scalars['String']['input']>;
+  minReservationDate?: InputMaybe<Scalars['String']['input']>;
   minReservationTime?: InputMaybe<Scalars['String']['input']>;
+  reservationDayOfWeek?: InputMaybe<DayOfWeek>;
 };
 
 export type TeeTimeChangesResponse = {
@@ -186,18 +167,14 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   AddTeeTimeInput: AddTeeTimeInput;
-  Author: ResolverTypeWrapper<Author>;
-  Book: ResolverTypeWrapper<Book>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   DayOfWeek: DayOfWeek;
   Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
-  Library: ResolverTypeWrapper<Library>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   TeeTimeChange: ResolverTypeWrapper<TeeTimeChange>;
-  TeeTimeChangeResponse: ResolverTypeWrapper<TeeTimeChangeResponse>;
   TeeTimeChangesInput: TeeTimeChangesInput;
   TeeTimeChangesResponse: ResolverTypeWrapper<TeeTimeChangesResponse>;
   TestMutationResponse: ResolverTypeWrapper<TestMutationResponse>;
@@ -206,46 +183,24 @@ export type ResolversTypes = ResolversObject<{
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   AddTeeTimeInput: AddTeeTimeInput;
-  Author: Author;
-  Book: Book;
   Boolean: Scalars['Boolean']['output'];
   Float: Scalars['Float']['output'];
   Int: Scalars['Int']['output'];
-  Library: Library;
   Mutation: {};
   Query: {};
   String: Scalars['String']['output'];
   TeeTimeChange: TeeTimeChange;
-  TeeTimeChangeResponse: TeeTimeChangeResponse;
   TeeTimeChangesInput: TeeTimeChangesInput;
   TeeTimeChangesResponse: TeeTimeChangesResponse;
   TestMutationResponse: TestMutationResponse;
 }>;
 
-export type AuthorResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Author'] = ResolversParentTypes['Author']> = ResolversObject<{
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
-export type BookResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Book'] = ResolversParentTypes['Book']> = ResolversObject<{
-  author?: Resolver<ResolversTypes['Author'], ParentType, ContextType>;
-  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
-export type LibraryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Library'] = ResolversParentTypes['Library']> = ResolversObject<{
-  books?: Resolver<Maybe<Array<ResolversTypes['Book']>>, ParentType, ContextType>;
-  branch?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
-  addTeeTimeChange?: Resolver<Maybe<ResolversTypes['TeeTimeChangeResponse']>, ParentType, ContextType, RequireFields<MutationAddTeeTimeChangeArgs, 'input'>>;
+  addTeeTimeChanges?: Resolver<Maybe<Array<Maybe<ResolversTypes['TeeTimeChange']>>>, ParentType, ContextType, RequireFields<MutationAddTeeTimeChangesArgs, 'teeTimes'>>;
   testMutation?: Resolver<Maybe<ResolversTypes['TestMutationResponse']>, ParentType, ContextType, Partial<MutationTestMutationArgs>>;
 }>;
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  libraries?: Resolver<Maybe<Array<Maybe<ResolversTypes['Library']>>>, ParentType, ContextType>;
   teeTimeChanges?: Resolver<ResolversTypes['TeeTimeChangesResponse'], ParentType, ContextType, RequireFields<QueryTeeTimeChangesArgs, 'input'>>;
   test?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 }>;
@@ -262,11 +217,6 @@ export type TeeTimeChangeResolvers<ContextType = Context, ParentType extends Res
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type TeeTimeChangeResponseResolvers<ContextType = Context, ParentType extends ResolversParentTypes['TeeTimeChangeResponse'] = ResolversParentTypes['TeeTimeChangeResponse']> = ResolversObject<{
-  courseName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
 export type TeeTimeChangesResponseResolvers<ContextType = Context, ParentType extends ResolversParentTypes['TeeTimeChangesResponse'] = ResolversParentTypes['TeeTimeChangesResponse']> = ResolversObject<{
   teeTimeChanges?: Resolver<Array<Maybe<ResolversTypes['TeeTimeChange']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -278,13 +228,9 @@ export type TestMutationResponseResolvers<ContextType = Context, ParentType exte
 }>;
 
 export type Resolvers<ContextType = Context> = ResolversObject<{
-  Author?: AuthorResolvers<ContextType>;
-  Book?: BookResolvers<ContextType>;
-  Library?: LibraryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   TeeTimeChange?: TeeTimeChangeResolvers<ContextType>;
-  TeeTimeChangeResponse?: TeeTimeChangeResponseResolvers<ContextType>;
   TeeTimeChangesResponse?: TeeTimeChangesResponseResolvers<ContextType>;
   TestMutationResponse?: TestMutationResponseResolvers<ContextType>;
 }>;
