@@ -21,8 +21,10 @@ export type AddTeeTimeInput = {
   courseName: Scalars['String']['input'];
   playersAvailable: Scalars['Int']['input'];
   priceDollars: Scalars['Float']['input'];
+  /** YYYY-MM-DD format */
   reservationDate: Scalars['String']['input'];
   reservationDayOfWeek: DayOfWeek;
+  /** HH:MM:SS format  */
   reservationTime: Scalars['String']['input'];
 };
 
@@ -77,8 +79,10 @@ export type TeeTimeChange = {
 
 export type TeeTimeChangesInput = {
   courseName?: InputMaybe<Scalars['String']['input']>;
+  /** Expects date in YYYY-MM-DD format */
   maxReservationDate?: InputMaybe<Scalars['String']['input']>;
   maxReservationTime?: InputMaybe<Scalars['String']['input']>;
+  /** Expects date in YYYY-MM-DD format */
   minReservationDate?: InputMaybe<Scalars['String']['input']>;
   minReservationTime?: InputMaybe<Scalars['String']['input']>;
   reservationDayOfWeek?: InputMaybe<DayOfWeek>;
@@ -86,7 +90,7 @@ export type TeeTimeChangesInput = {
 
 export type TeeTimeChangesResponse = {
   __typename?: 'TeeTimeChangesResponse';
-  teeTimeChanges: Array<Maybe<TeeTimeChange>>;
+  teeTimeChanges: Array<TeeTimeChange>;
 };
 
 export type TestMutationResponse = {
@@ -218,7 +222,7 @@ export type TeeTimeChangeResolvers<ContextType = Context, ParentType extends Res
 }>;
 
 export type TeeTimeChangesResponseResolvers<ContextType = Context, ParentType extends ResolversParentTypes['TeeTimeChangesResponse'] = ResolversParentTypes['TeeTimeChangesResponse']> = ResolversObject<{
-  teeTimeChanges?: Resolver<Array<Maybe<ResolversTypes['TeeTimeChange']>>, ParentType, ContextType>;
+  teeTimeChanges?: Resolver<Array<ResolversTypes['TeeTimeChange']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -235,3 +239,17 @@ export type Resolvers<ContextType = Context> = ResolversObject<{
   TestMutationResponse?: TestMutationResponseResolvers<ContextType>;
 }>;
 
+
+export type TeeTimeChangesByDateQueryVariables = Exact<{
+  input: TeeTimeChangesInput;
+}>;
+
+
+export type TeeTimeChangesByDateQuery = { __typename?: 'Query', teeTimeChanges: { __typename?: 'TeeTimeChangesResponse', teeTimeChanges: Array<{ __typename?: 'TeeTimeChange', priceDollars: number, playersAvailable: number, reservationTime: string, courseName: string, reservationDate: string, reservationDayOfWeek: DayOfWeek, updateDateTime: string }> } };
+
+export type AddTeeTimeChangesMutationVariables = Exact<{
+  teeTimes: Array<AddTeeTimeInput> | AddTeeTimeInput;
+}>;
+
+
+export type AddTeeTimeChangesMutation = { __typename?: 'Mutation', addTeeTimeChanges?: Array<{ __typename?: 'TeeTimeChange', id: number } | null> | null };

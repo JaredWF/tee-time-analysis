@@ -61,6 +61,10 @@ export const resolvers: Resolvers = {
       };
     },
     addTeeTimeChanges: async (root, args, context) => {
+      if (args.teeTimes.length === 0) {
+        return [];
+      }
+
       const { db } = context;
 
       const result = await db.insertInto('tee_time_changes')
@@ -75,7 +79,7 @@ export const resolvers: Resolvers = {
           course: courseName,
           reservation_date: reservationDate,
           reservation_time: reservationTime,
-          reservation_day_of_week: reservationDayOfWeek,
+          reservation_day_of_week: dayOfWeekStringToEnum(reservationDayOfWeek),
           players_available: playersAvailable,
           price_dollars: priceDollars
         })))
@@ -116,3 +120,13 @@ function dayOfWeekStringToEnum(dayOfWeek: string): DayOfWeek {
       return DayOfWeek.Monday;
   }
 }
+
+const dayOfWeekConversion = [
+  DayOfWeek.Sunday, 
+  DayOfWeek.Monday, 
+  DayOfWeek.Tuesday, 
+  DayOfWeek.Wednesday,
+  DayOfWeek.Thursday,
+  DayOfWeek.Friday,
+  DayOfWeek.Saturday
+];
