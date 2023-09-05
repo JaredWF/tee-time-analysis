@@ -6,7 +6,9 @@ import { Kysely } from "kysely";
 import { DB } from "kysely-codegen";
 import { startDB } from "../db";
 
-const typeDefs = readFileSync('./src/graphql/types/types.graphql', { encoding: 'utf-8' });
+const path = require('path');
+
+const typeDefs = readFileSync(path.join(__dirname, './src/graphql/types/types.graphql'), { encoding: 'utf-8' });
 export interface Context {
   db: Kysely<DB>,
 }
