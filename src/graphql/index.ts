@@ -8,7 +8,7 @@ import { startDB } from "../db";
 
 const path = require('path');
 
-const typeDefs = readFileSync(path.join(process.cwd(), './types/types.graphql'), { encoding: 'utf-8' });
+const typeDefs = readFileSync('./src/graphql/types/types.graphql', { encoding: 'utf-8' });
 export interface Context {
   db: Kysely<DB>,
 }
