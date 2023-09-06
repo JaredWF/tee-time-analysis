@@ -7,7 +7,7 @@ const path = require('path');
 export function startDB() {
   console.log('starting db');
 
-  const db = new Database(path.join(__dirname, 'tee-times.db'), { verbose: console.log });
+  const db = new Database('./tee-times.db', { verbose: console.log });
   
   const kyselyDb = new Kysely<DB>({
     dialect: new SqliteDialect({
