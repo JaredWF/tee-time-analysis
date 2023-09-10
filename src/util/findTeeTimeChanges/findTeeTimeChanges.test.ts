@@ -123,4 +123,16 @@ describe('findTeeTimeChanges', () => {
       { reservationDate: '2023-08-20', reservationTime: '14:20:00', playersAvailable: 0 },
     ])
   });
+
+  test('hangs', () => {
+    const existingTeeTimes = [
+      { reservationDate: '2023-08-20', reservationTime: '10:30:00', playersAvailable: 0 },
+    ];
+    const newTeeTimes = [
+      { reservationDate: '2023-08-20', reservationTime: '10:35:00', playersAvailable: 1 },
+    ];
+    expect(findTeeTimeChanges(existingTeeTimes, newTeeTimes)).toEqual([
+      { reservationDate: '2023-08-20', reservationTime: '10:35:00', playersAvailable: 1 },
+    ])
+  });
 });

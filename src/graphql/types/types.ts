@@ -240,6 +240,13 @@ export type Resolvers<ContextType = Context> = ResolversObject<{
 }>;
 
 
+export type TeeTimeChangesForGraphQueryVariables = Exact<{
+  input: TeeTimeChangesInput;
+}>;
+
+
+export type TeeTimeChangesForGraphQuery = { __typename?: 'Query', teeTimeChanges: { __typename?: 'TeeTimeChangesResponse', teeTimeChanges: Array<{ __typename?: 'TeeTimeChange', priceDollars: number, playersAvailable: number, reservationTime: string, courseName: string, reservationDate: string, reservationDayOfWeek: DayOfWeek, updateDateTime: string }> } };
+
 export type TeeTimeChangesByDateQueryVariables = Exact<{
   input: TeeTimeChangesInput;
 }>;

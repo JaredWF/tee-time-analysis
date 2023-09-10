@@ -102,8 +102,10 @@ export function findTeeTimeChanges<T extends TeeTime & PlayerCount, U extends Te
     } else if (t1.reservationDate < t0.reservationDate || (t1.reservationDate === t0.reservationDate && t1.reservationTime < t0.reservationTime)) {
       out.push(t1);
       i1++;
-    } else if (t0.playersAvailable > 0) {
-      out.push({ ...t0, playersAvailable: 0 });
+    } else {
+      if (t0.playersAvailable > 0) {
+        out.push({ ...t0, playersAvailable: 0 });
+      }
       i0++;
     }
   }

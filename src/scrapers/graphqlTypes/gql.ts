@@ -13,6 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n  query teeTimeChangesForGraph($input: TeeTimeChangesInput!) {\n    teeTimeChanges(input: $input) {\n      teeTimeChanges {\n        priceDollars\n        playersAvailable\n        reservationTime\n        courseName\n        reservationDate\n        reservationDayOfWeek\n        updateDateTime\n      }\n    }\n  }\n": types.TeeTimeChangesForGraphDocument,
     "\n  query teeTimeChangesByDate($input: TeeTimeChangesInput!) {\n    teeTimeChanges(input: $input) {\n      teeTimeChanges {\n        priceDollars\n        playersAvailable\n        reservationTime\n        courseName\n        reservationDate\n        reservationDayOfWeek\n        updateDateTime\n      }\n    }\n  }\n": types.TeeTimeChangesByDateDocument,
     "\n  mutation addTeeTimeChanges($teeTimes: [AddTeeTimeInput!]!) {\n    addTeeTimeChanges(teeTimes: $teeTimes) { \n      id\n    }\n  }\n": types.AddTeeTimeChangesDocument,
 };
@@ -31,6 +32,10 @@ const documents = {
  */
 export function gql(source: string): unknown;
 
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query teeTimeChangesForGraph($input: TeeTimeChangesInput!) {\n    teeTimeChanges(input: $input) {\n      teeTimeChanges {\n        priceDollars\n        playersAvailable\n        reservationTime\n        courseName\n        reservationDate\n        reservationDayOfWeek\n        updateDateTime\n      }\n    }\n  }\n"): (typeof documents)["\n  query teeTimeChangesForGraph($input: TeeTimeChangesInput!) {\n    teeTimeChanges(input: $input) {\n      teeTimeChanges {\n        priceDollars\n        playersAvailable\n        reservationTime\n        courseName\n        reservationDate\n        reservationDayOfWeek\n        updateDateTime\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

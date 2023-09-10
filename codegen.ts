@@ -4,7 +4,7 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 const config: CodegenConfig = {
   overwrite: true,
   schema: "src/graphql/types/types.graphql",
-  documents: "src/scrapers/**/*.ts",
+  documents: "src/**/*.*(ts|tsx)",
   generates: {
     "src/graphql/types/types.ts": {
       config: {
