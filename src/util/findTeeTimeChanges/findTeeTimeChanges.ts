@@ -73,6 +73,9 @@ export function selectLastAddedTeeTimes<T extends TeeTime & UpdateTime>(arr: T[]
     if (uniqueArr[last].reservationDate !== arr[i].reservationDate || uniqueArr[last].reservationTime !== arr[i].reservationTime) {
       uniqueArr.push(arr[i]);
     } else if (currDateTime > previousUpdateDate) {
+      // console.log('replacing with last added');
+      // console.log(uniqueArr[last]);
+      // console.log(arr[i]);
       uniqueArr[last] = arr[i];
     }
   }
@@ -111,7 +114,7 @@ export function findTeeTimeChanges<T extends TeeTime & PlayerCount, U extends Te
   }
 
   if (i0 < existingTeeTimes.length) {
-    out.push(...(existingTeeTimes.slice(i0).map((teeTime) => ({ ...teeTime, playersAvailable: 0 }))));
+    out.push(...(existingTeeTimes.slice(i0).filter((teeTime) => teeTime.playersAvailable > 0).map((teeTime) => ({ ...teeTime, playersAvailable: 0 }))));
   }
 
   if (i1 < currentTeeTimes.length) {
