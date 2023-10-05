@@ -38,4 +38,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Deploy on pi
 
-nohup pnpm start-all </dev/null > out.log 2> error.log &
+```bash
+pnpm start-all &> all.log &
+disown
+```

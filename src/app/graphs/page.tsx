@@ -33,8 +33,8 @@ const getData = async () => {
     fetchPolicy: 'no-cache',
     variables: {
       input: {
-        minReservationDate: '2023-09-10',
-        maxReservationDate: '2023-09-10',
+        minReservationDate: '2023-09-29',
+        maxReservationDate: '2023-09-29',
       }
     }
   })).data.teeTimeChanges.teeTimeChanges;

@@ -73,20 +73,25 @@ async function scrape() {
 
       console.log(`TEE TIME CHANGES: ${teeTimeChanges.length}`);
 
-      const result = await client.mutate<AddTeeTimeChangesMutation, AddTeeTimeChangesMutationVariables>({
-        mutation: addTeeTimeChanges,
-        fetchPolicy: 'no-cache',
-        variables: {
-          teeTimes: teeTimeChanges.map((teeTime) => ({
-            priceDollars: teeTime.priceDollars,
-            playersAvailable: teeTime.playersAvailable,
-            reservationDate: teeTime.reservationDate,
-            reservationDayOfWeek: teeTime.reservationDayOfWeek,
-            reservationTime: teeTime.reservationTime,
-            courseName: teeTime.courseName,
-          })),
-        },
-      });
+      try {
+        await client.mutate<AddTeeTimeChangesMutation, AddTeeTimeChangesMutationVariables>({
+          mutation: addTeeTimeChanges,
+          fetchPolicy: 'no-cache',
+          variables: {
+            teeTimes: teeTimeChanges.map((teeTime) => ({
+              priceDollars: teeTime.priceDollars,
+              playersAvailable: teeTime.playersAvailable,
+              reservationDate: teeTime.reservationDate,
+              reservationDayOfWeek: teeTime.reservationDayOfWeek,
+              reservationTime: teeTime.reservationTime,
+              courseName: teeTime.courseName,
+            })),
+          },
+        });
+      } catch (e) {
+        console.error('Error posting tee times');
+        console.error(e);
+      }
     }
 
     await waitSeconds(300); // 5 min polling interval should be good enough resolution
